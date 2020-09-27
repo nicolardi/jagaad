@@ -36,10 +36,10 @@ trait ApiResponse {
 	 * @param  mixed $code
 	 * @return void
 	 */
-	protected function errorResponse($message = null, $code): JsonResponse
+	protected function errorResponse($message = null, $code=401): JsonResponse
 	{
 		return response()->json([
-			'status'=>'ERR',
+			'status'=>'ERROR',
 			'message' => $message,
 			'data' => null
 		], $code);

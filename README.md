@@ -1,61 +1,221 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# JAGAAD Wishlist API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+This is a sample project. It implements a Wishlist API with docker-friendly environment, JWT authentication, database migrations & seeds, Feature tests and Unit tests
 
-## About Laravel
+## Running the development environment
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```
+docker-compose up
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+It runs Laravel8 + MariaDb + Webserver
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+http://localhost:3000
 
-## Learning Laravel
+## Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+To run the "artisan" command
 
-## Laravel Sponsors
+```
+docker-compose exec myapp php artisan
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+*Suggestion*: define the previous command in your .bash_profile as an ALIAS to speed things up
 
-### Premium Partners
+```
+alias artisan="docker-compose exec myapp php artisan"
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+## Run the tests
+
+```
+artisan test
+```
+
+## Api
+
+The api uses this base address:
+
+```
+http://localhost:3000/api/[endpoint]
+```
+
+## Endpoints list
+
+#Authentication
+
+* POST api/login email/password based authentication 
+
+Query parameters:
+```
+email: fake@email.com
+password: 12345678
+```
+
+Success authentication response:
+```
+{
+    "status": "OK",
+    "message": null,
+    "data":{
+       "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6NDAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYwMTIyODIyOCwiZXhwIjoxNjAxMzE0NjI4LCJuYmYiOjE2MDEyMjgyMjgsImp0aSI6Ik5VdUdiVHgxbkI2VU1PYUciLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.cnw_mNWkbIl4IpeffS4nkiFsG-TxbMTQj-BckTfbBA8"
+    }
+}
+```
+
+Wrong authentication response:
+```
+{
+    "status": "ERROR",
+    "message": "Wrong email or password",
+    "data": null
+}
+```
+
+* GET api/me gets the logged user data
+
+Headers
+```
+Authorization: Bearer TOKEN
+Accept: application/json
+```
+
+Success response:
+```
+{
+    "status": "OK",
+    "message": null,
+    "data":{
+        "id": 1,
+        "name": "yzLlzGTuAP",
+        "email": "fake@email.com",
+        "email_verified_at": "2020-09-27T14:01:30.000000Z",
+        "created_at": "2020-09-27T14:01:29.000000Z",
+        "updated_at": "2020-09-27T14:01:29.000000Z"
+    }
+}
+```
+
+Error response:
+```
+{
+    "message": "Unauthenticated."
+}
+```
+
+
+* GET api/logout 
+Headers
+```
+Authorization: Bearer TOKEN
+Accept: application/json
+```
+
+Successful response:
+```
+{
+    "status": "OK",
+    "message": null,
+    "data": null
+}
+```
+
+Error response:
+```
+{
+    "message": "Unauthenticated."
+}
+```
+
+
+
+
+* GET api/refresh refresh the jwt token (default token expire 24h)
+Headers
+```
+Authorization: Bearer TOKEN
+Accept: application/json
+```
+
+Successful response:
+```
+{
+    "status": "OK",
+    "message": null,
+    "data":{
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6NDAwMFwvYXBpXC9yZWZyZXNoIiwiaWF0IjoxNjAxMjI5NTA5LCJleHAiOjE2MDEzMTYwMTYsIm5iZiI6MTYwMTIyOTYxNiwianRpIjoiNEFuQUhnSTYwZll5dmgwUyIsInN1YiI6MSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.mca9_hHFeaaIZ-CNXiTDk9iHk419hC7jmtRf9r1RF7U"
+    }
+}
+```
+
+Error response:
+```
+{
+    "message": "Unauthenticated."
+}
+```
+
+* GET api/respond returns the current token basic informations
+Headers
+```
+Authorization: Bearer TOKEN
+Accept: application/json
+```
+
+Successful response:
+```
+{
+    "status": "OK",
+    "message": null,
+    "data":{
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6NDAwMFwvYXBpXC9yZXNwb25kIiwiaWF0IjoxNjAxMjMwMDgwLCJleHAiOjE2MDEzMTY0ODAsIm5iZiI6MTYwMTIzMDA4MCwianRpIjoiS09hREI4aVZyMmQ2Sm1aVyIsInN1YiI6MSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.iZIJ-mVBdK5HbBPQjQVjHBBpVD7pJU9SSP-pl_b80g8",
+        "token_type": "bearer",
+        "expires_in": 86400
+    }
+}
+```
+
+Error response:
+```
+{
+    "message": "Unauthenticated."
+}
+```
+
+
+#Wishlist
+
+One wishlist is linked to the user. A user can have any number of wishlists each of them has a title
+
+* GET wishlist
+
+
+
+
+
+
+## Command line
+
+To export the wishlists simply run this command
+
+```
+artisan wishlist:export
+```
+
+Expected result (depending on database data):
+```
+1,"User 1 wishlist",1
+2,"User 2 wishlist",1
+```
+
+The format used is CSV with:
+
+user_id,wishlist title,number of products in the wishlist
+
+## Usage
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
 ## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[MIT](https://choosealicense.com/licenses/mit/)

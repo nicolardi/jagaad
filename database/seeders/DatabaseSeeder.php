@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use DateTime;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
@@ -46,7 +47,7 @@ class DatabaseSeeder extends Seeder
         $user_id1 = DB::table('users')->insertGetId([
             'name' => Str::random(10),
             'email' => 'fake@email.com',
-            'password' => '12345678',
+            'password' => Hash::make('12345678'),
             'email_verified_at' => new DateTime(),
             'created_at' => $current_time,
             'updated_at' => $current_time
@@ -55,7 +56,7 @@ class DatabaseSeeder extends Seeder
         $user_id2 = DB::table('users')->insertGetId([
             'name' => Str::random(10),
             'email' => 'fake2@email.com',
-            'password' => '12345678',
+            'password' => Hash::make('12345678'),
             'email_verified_at' => new DateTime(),
             'created_at' => $current_time,
             'updated_at' => $current_time

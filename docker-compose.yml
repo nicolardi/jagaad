@@ -22,7 +22,7 @@ services:
     depends_on:
       - mariadb
     ports:
-      - 4000:3000
+      - 3000:3000
     volumes:
       - ./:/app
       
