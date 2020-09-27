@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  mariadb:
+    image: 'bitnami/mariadb:10.1'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=jagaad
+      - MARIADB_DATABASE=ecommerce
+      - MARIADB_PASSWORD=pippo
+    ports:
+        - 3306:3306
+
+  myapp:
+    tty: true
+    image: bitnami/laravel:8
+    environment:
+      - DB_HOST=mariadb
+      - DB_USERNAME=jagaad
+      - DB_DATABASE=ecommerce
+      - DB_PASSWORD=pippo
+    depends_on:
+      - mariadb
+    ports:
+      - 4000:3000
+    volumes:
+      - ./:/app
+      
+    # privileged: true # Privileged mode could be required to run this container under Windows
