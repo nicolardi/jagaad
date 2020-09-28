@@ -11,7 +11,7 @@ use Tests\TestCase;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class WishlistContentControllerTest extends TestCase
+class WishlistContentsControllerTest extends TestCase
 {
    // use RefreshDatabase;
    // use WithoutMiddleware;
