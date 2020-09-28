@@ -4,35 +4,54 @@ This is a sample project. It implements a Wishlist API with docker-friendly envi
 
 # Setup
 
-# .env
+1. .env
 Copy the example environment file to the .env
 
 ```
 cp .env.example .env
 ```
 
-## Run composer install
-If you have php installed on your system sun
+2. composer install
 ```
 php composer.phar install
 ```
-
-Otherwise
-
+If docker-compose is up you could do the following:
 ```
-docker-compose up -d
 docker-compose exec myapp php composer.phar install
 ```
 
-## Running the development environment
+3. Running the development environment
 
 ```
-docker-compose up -d
+docker-compose up
 ```
 
-It runs Laravel8 + MariaDb + Webserver
+If you encounter any issues check the file permissions on your filesystem
 
-http://localhost:3000
+
+4. seed the database
+```
+docker-compose exec myapp php artisan db:seed
+```
+The seed adds two valid users:
+
+fake@email.com, 12345678
+fake2@email.com, 12345678
+
+5. run the tests
+
+```
+docker-compose exec myapp php artisan test
+```
+
+In case of issues try running the same command with --proces-isolation option
+
+docker-compose exec myapp php artisan test --process-isolation
+
+See here https://medium.com/@thakuramit3/failing-laravel-dusk-test-with-bindingresolutionexception-49e30e789da7
+
+# Basic APO infos
+The base url is http://localhost:3000
 
 ## Artisan command
 
@@ -48,21 +67,6 @@ docker-compose exec myapp php artisan
 alias artisan="docker-compose exec myapp php artisan"
 ```
 
-## seed
-```
-docker-compose exec myapp php artisan db:seed
-```
-The seed adds two valid users:
-
-fake@email.com, 12345678
-fake2@email.com, 12345678
-
-## Run the tests
-
-```
-docker-compose exec myapp php artisan test
-```
-
 # Api descripion
 
 The api uses this base address:
@@ -70,7 +74,6 @@ The api uses this base address:
 ```
 http://localhost:3000/api/[endpoint]
 ```
-
 
 # Authentication
 
