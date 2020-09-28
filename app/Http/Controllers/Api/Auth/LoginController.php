@@ -33,7 +33,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
+    public function me(Request $request)
     {
         return $this->successResponse(auth()->user());
     }

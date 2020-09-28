@@ -183,14 +183,190 @@ Error response:
 }
 ```
 
-
 #Wishlist
 
 One wishlist is linked to the user. A user can have any number of wishlists each of them has a title
 
-* GET wishlist
+* GET wishlist wishlists of the autenticated user
+Headers
+```
+Authorization: Bearer TOKEN
+Accept: application/json
+```
 
+Successful response:
+```
+{
+    "status": "OK",
+    "message": null,
+    "data":[
+        {"id": 1, "name": "User 1 wishlist", "user_id": 1, "created_at": "2020-09-27T14:01:29.000000Z", "updated_at": "2020-09-27T14:01:29.000000Z"},
+        {"id": 3, "name": "F7zft72EOnr28VNz", "user_id": 1, "created_at": "2020-09-27T17:19:02.000000Z","updated_at": "2020-09-27T14:01:29.000000Z"},
+        ]
+}
+```
 
+Error response:
+```
+{
+    "message": "Unauthenticated."
+}
+```
+
+# GET api/wishlist/id reads a wishlist (of the logged user) by it's id
+Headers
+```
+Authorization: Bearer TOKEN
+Accept: application/json
+```
+
+Successful response:
+```
+{
+    "status": "OK",
+    "message": null,
+    "data":{
+        "wishlist":{"id": 1, "name": "User 1 wishlist", "user_id": 1, "created_at": "2020-09-27T14:01:29.000000Z",…},
+        "items":[
+            {"id": 1, "wishlist_id": 1, "product_id": 1, "created_at": "2020-09-27T14:01:29.000000Z",…}
+    ]
+}
+
+```
+
+Error response:
+```
+{
+    "message": "Unauthenticated."
+}
+
+```
+Error response if the wishlist is not owned by the logged user
+```
+{
+    "status": "ERROR",
+    "message": "This item is not public",
+    "data": null
+}
+```
+
+# POST api/wishlist create a new wishlist linked to the logged user with a title 
+Headers
+```
+Authorization: Bearer TOKEN
+Accept: application/json
+Content-Type: application/json
+```
+
+Body:
+```
+{
+  "name":"my wishlist"
+}
+```
+
+Successful response:
+```
+{
+    "status": "OK",
+    "message": null,
+    "data":{
+        "user_id": 1,
+        "name": "my wishlist",
+        "updated_at": "2020-09-28T11:02:14.000000Z",
+        "created_at": "2020-09-28T11:02:14.000000Z",
+        "id": 70
+    }
+}
+```
+
+Error response:
+```
+{
+    "message": "Unauthenticated."
+}
+```
+
+# PATCH api/wishlist/id update a wishlist  
+Headers
+```
+Authorization: Bearer TOKEN
+Accept: application/json
+Content-Type: application/json
+```
+
+Body:
+```
+{
+   "name":"Questo è un nuovo nome"
+}
+```
+
+Successful response:
+```
+{
+    "status": "OK",
+    "message": null,
+    "data":{
+        "id": 1,
+        "name": "Questo è un nuovo nome",
+        "user_id": 1,
+        "created_at": "2020-09-27T14:01:29.000000Z",
+        "updated_at": "2020-09-28T11:08:19.000000Z"
+    }
+}
+```
+
+Error response if the wishlist is not owned by the logged user
+```
+{
+    "status": "ERROR",
+    "message": "This item is not public",
+    "data": null
+}
+```
+
+Error response:
+```
+{
+    "message": "Unauthenticated."
+}
+```
+
+# DELETE api/wishlist/id destroys the specified wishlist by id
+
+Headers
+```
+Authorization: Bearer TOKEN
+Accept: application/json
+Content-Type: application/json
+```
+Successful response:
+```
+{
+    "status": "OK",
+    "message": null,
+    "data": null
+}
+```
+
+Error response if the wishlist is not owned by the logged user
+```
+{
+    "status": "ERROR",
+    "message": "This item is not public",
+    "data": null
+}
+```
+
+Error response:
+```
+{
+    "message": "Unauthenticated."
+}
+```
+
+## Wishlist contents
 
 
 

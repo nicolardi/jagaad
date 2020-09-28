@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Api\Auth\Controller;
 use App\Models\Wishlist;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
@@ -16,27 +17,35 @@ use Illuminate\Http\Request;
 class WishlistController extends Controller
 {
     use ApiResponse;
-    
+
     /**
      * list the user wishlist
      *
      * @return JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $wishlist = Wishlist::all();
+        $userid = $request->input('user_id');
+        $wishlist = Wishlist::query()->where('user_id', '=', $userid)->get();
         return $this->successResponse($wishlist);
     }
 
-    public function show($id) {
+    public function show(Request $request, $id)
+    {
+        
         $wishlist = Wishlist::find($id);
+        $userid = $request->input('user_id');
+        if ($userid && $wishlist->user_id != $userid) {
+           return $this->errorResponse('This item is not public');
+        }
+
         $ret = [
             'wishlist' => $wishlist,
             'items' => $wishlist->wishlistContents
         ];
         return $this->successResponse($ret);
     }
-        
+
     /**
      * Store (create) a new wishlist
      * 
@@ -50,7 +59,7 @@ class WishlistController extends Controller
 
         return $this->successResponse($wishlist);
     }
-        
+
     /**
      * Update a wishlist (PATCH)
      *
@@ -61,19 +70,27 @@ class WishlistController extends Controller
     public function update(Request $request, Wishlist $wishlist)
     {
         $data = $request->input();
+        $user_id = $request->input('user_id');
+        if ($user_id != $wishlist->user_id) {
+            return $this->errorResponse('This item is not public');
+        }
         $wishlist->update($data);
 
         return $this->successResponse($wishlist);
     }
-        
+
     /**
      * Remove a wishlist (DELETE)
      *
      * @param  Wishlist $wishlist
      * @return JsonResponse
      */
-    public function destroy(Wishlist $wishlist)
+    public function destroy(Request $request, Wishlist $wishlist)
     {
+        $user_id = $request->input('user_id');
+        if ($user_id != $wishlist->user_id) {
+            return $this->errorResponse('This item is not public');
+        }
         $wishlist->delete();
         return $this->successResponse(null);
     }
