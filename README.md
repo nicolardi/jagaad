@@ -33,7 +33,7 @@ alias artisan="docker-compose exec myapp php artisan"
 artisan test
 ```
 
-## Api
+# Api descripion
 
 The api uses this base address:
 
@@ -41,9 +41,8 @@ The api uses this base address:
 http://localhost:3000/api/[endpoint]
 ```
 
-## Endpoints list
 
-#Authentication
+# Authentication
 
 * POST api/login email/password based authentication 
 
@@ -53,7 +52,7 @@ email: fake@email.com
 password: 12345678
 ```
 
-Success authentication response:
+## Success authentication response:
 ```
 {
     "status": "OK",
@@ -64,7 +63,7 @@ Success authentication response:
 }
 ```
 
-Wrong authentication response:
+## Wrong authentication response:
 ```
 {
     "status": "ERROR",
@@ -75,13 +74,13 @@ Wrong authentication response:
 
 * GET api/me gets the logged user data
 
-Headers
+## Headers
 ```
 Authorization: Bearer TOKEN
 Accept: application/json
 ```
 
-Success response:
+## Success response:
 ```
 {
     "status": "OK",
@@ -97,13 +96,12 @@ Success response:
 }
 ```
 
-Error response:
+## Error response:
 ```
 {
     "message": "Unauthenticated."
 }
 ```
-
 
 * GET api/logout 
 Headers
@@ -112,7 +110,7 @@ Authorization: Bearer TOKEN
 Accept: application/json
 ```
 
-Successful response:
+## Successful response:
 ```
 {
     "status": "OK",
@@ -121,24 +119,21 @@ Successful response:
 }
 ```
 
-Error response:
+## Error response:
 ```
 {
     "message": "Unauthenticated."
 }
 ```
 
-
-
-
 * GET api/refresh refresh the jwt token (default token expire 24h)
-Headers
+## Headers
 ```
 Authorization: Bearer TOKEN
 Accept: application/json
 ```
 
-Successful response:
+## Successful response:
 ```
 {
     "status": "OK",
@@ -149,7 +144,7 @@ Successful response:
 }
 ```
 
-Error response:
+## Error response:
 ```
 {
     "message": "Unauthenticated."
@@ -157,13 +152,13 @@ Error response:
 ```
 
 * GET api/respond returns the current token basic informations
-Headers
+## Headers
 ```
 Authorization: Bearer TOKEN
 Accept: application/json
 ```
 
-Successful response:
+## Successful response:
 ```
 {
     "status": "OK",
@@ -176,25 +171,25 @@ Successful response:
 }
 ```
 
-Error response:
+## Error response:
 ```
 {
     "message": "Unauthenticated."
 }
 ```
 
-#Wishlist
+# Wishlist
 
 One wishlist is linked to the user. A user can have any number of wishlists each of them has a title
 
 * GET wishlist wishlists of the autenticated user
-Headers
+## Headers
 ```
 Authorization: Bearer TOKEN
 Accept: application/json
 ```
 
-Successful response:
+## Successful response:
 ```
 {
     "status": "OK",
@@ -206,21 +201,21 @@ Successful response:
 }
 ```
 
-Error response:
+## Error response:
 ```
 {
     "message": "Unauthenticated."
 }
 ```
 
-# GET api/wishlist/id reads a wishlist (of the logged user) by it's id
-Headers
+* GET api/wishlist/id reads a wishlist (of the logged user) by it's id
+## Headers
 ```
 Authorization: Bearer TOKEN
 Accept: application/json
 ```
 
-Successful response:
+## Successful response:
 ```
 {
     "status": "OK",
@@ -234,14 +229,14 @@ Successful response:
 
 ```
 
-Error response:
+## Error response:
 ```
 {
     "message": "Unauthenticated."
 }
 
 ```
-Error response if the wishlist is not owned by the logged user
+## Error response if the wishlist is not owned by the logged user
 ```
 {
     "status": "ERROR",
@@ -250,22 +245,22 @@ Error response if the wishlist is not owned by the logged user
 }
 ```
 
-# POST api/wishlist create a new wishlist linked to the logged user with a title 
-Headers
+* POST api/wishlist create a new wishlist linked to the logged user with a title 
+## Headers
 ```
 Authorization: Bearer TOKEN
 Accept: application/json
 Content-Type: application/json
 ```
 
-Body:
+## Body:
 ```
 {
   "name":"my wishlist"
 }
 ```
 
-Successful response:
+## Successful response:
 ```
 {
     "status": "OK",
@@ -280,29 +275,29 @@ Successful response:
 }
 ```
 
-Error response:
+## Error response:
 ```
 {
     "message": "Unauthenticated."
 }
 ```
 
-# PATCH api/wishlist/id update a wishlist  
-Headers
+* PATCH api/wishlist/id update a wishlist  
+## Headers
 ```
 Authorization: Bearer TOKEN
 Accept: application/json
 Content-Type: application/json
 ```
 
-Body:
+## Body:
 ```
 {
    "name":"Questo è un nuovo nome"
 }
 ```
 
-Successful response:
+## Successful response:
 ```
 {
     "status": "OK",
@@ -317,7 +312,7 @@ Successful response:
 }
 ```
 
-Error response if the wishlist is not owned by the logged user
+## Error response if the wishlist is not owned by the logged user
 ```
 {
     "status": "ERROR",
@@ -326,16 +321,16 @@ Error response if the wishlist is not owned by the logged user
 }
 ```
 
-Error response:
+## Error response:
 ```
 {
     "message": "Unauthenticated."
 }
 ```
 
-# DELETE api/wishlist/id destroys the specified wishlist by id
+* DELETE api/wishlist/id destroys the specified wishlist by id
 
-Headers
+## Headers
 ```
 Authorization: Bearer TOKEN
 Accept: application/json
@@ -350,7 +345,7 @@ Successful response:
 }
 ```
 
-Error response if the wishlist is not owned by the logged user
+## Error response if the wishlist is not owned by the logged user
 ```
 {
     "status": "ERROR",
@@ -359,19 +354,100 @@ Error response if the wishlist is not owned by the logged user
 }
 ```
 
-Error response:
+## Error response:
 ```
 {
     "message": "Unauthenticated."
 }
 ```
 
-## Wishlist contents
+# Wishlist contents
+
+The wishlist contents represent the products contained a a user's wishlist
 
 
+* POST api/wishlist_contents add a product to a wishlist 
+## Headers
+```
+Authorization: Bearer TOKEN
+Accept: application/json
+Content-Type: application/json
+```
+
+## Body:
+```
+{
+  "wishlist_id":1,
+  "product_id":1
+}
+```
+
+## Successful response:
+```
+{
+    "status": "OK",
+    "message": null,
+    "data":{
+        "wishlist_id": 1,
+        "product_id": 1,
+        "updated_at": "2020-09-28T12:38:11.000000Z",
+        "created_at": "2020-09-28T12:38:11.000000Z",
+        "id": 63
+    }
+}
+```
+
+## Error response if the wishlist is not owned by the logged user
+```
+{
+    "status": "ERROR",
+    "message": "This item is not public",
+    "data": null
+}
+```
+
+## Error response:
+```
+{
+    "message": "Unauthenticated."
+}
+```
+
+* DELETE api/wishlist_contents/id destroys the specified wishlist content by id
+
+## Headers
+```
+Authorization: Bearer TOKEN
+Accept: application/json
+Content-Type: application/json
+```
+Successful response:
+```
+{
+    "status": "OK",
+    "message": null,
+    "data": null
+}
+```
+
+## Error response if the wishlist is not owned by the logged user
+```
+{
+    "status": "ERROR",
+    "message": "This item is not public",
+    "data": null
+}
+```
+
+## Error response:
+```
+{
+    "message": "Unauthenticated."
+}
+```
 
 
-## Command line
+# Command line
 
 To export the wishlists simply run this command
 
@@ -389,9 +465,7 @@ The format used is CSV with:
 
 user_id,wishlist title,number of products in the wishlist
 
-## Usage
 
-## Contributing
 
-## License
+# License
 [MIT](https://choosealicense.com/licenses/mit/)
