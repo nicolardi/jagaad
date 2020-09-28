@@ -2,10 +2,23 @@
 
 This is a sample project. It implements a Wishlist API with docker-friendly environment, JWT authentication, database migrations & seeds, Feature tests and Unit tests
 
+## Run composer install
+If you have php installed on your system sun
+```
+php composer.phar install
+```
+
+Otherwise
+
+```
+docker-compose up -d
+docker-compose exec myapp php composer.phar install
+```
+
 ## Running the development environment
 
 ```
-docker-compose up
+docker-compose up -d
 ```
 
 It runs Laravel8 + MariaDb + Webserver
@@ -25,10 +38,7 @@ docker-compose exec myapp php artisan
 ```
 alias artisan="docker-compose exec myapp php artisan"
 ```
-## Run composer install
-```
-docker-compose exec myapp php composer.phar install
-```
+
 
 ## Run the tests
 

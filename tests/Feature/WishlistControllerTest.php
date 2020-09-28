@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature;
 
 use App\Helpers\TestsHelper;
 use App\Models\Wishlist;
