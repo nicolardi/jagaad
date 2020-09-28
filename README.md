@@ -2,6 +2,15 @@
 
 This is a sample project. It implements a Wishlist API with docker-friendly environment, JWT authentication, database migrations & seeds, Feature tests and Unit tests
 
+# Setup
+
+# .env
+Copy the example environment file to the .env
+
+```
+cp .env.example .env
+```
+
 ## Run composer install
 If you have php installed on your system sun
 ```
@@ -25,7 +34,7 @@ It runs Laravel8 + MariaDb + Webserver
 
 http://localhost:3000
 
-## Setup
+## Artisan command
 
 To run the "artisan" command
 

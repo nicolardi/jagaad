@@ -18,10 +18,13 @@ class Userid
     public function handle(Request $request, Closure $next)
     {
         // Overrides the user_id parameter 
-        $user_id = $request->user()->id;
-        $request->merge([
-            'user_id' => $user_id
-        ]);
+        $user = $request->user();
+        if ($user) {
+            $user_id = $user->id;
+            $request->merge([
+                'user_id' => $user_id
+            ]);
+        }
 
         return $next($request);
     }
