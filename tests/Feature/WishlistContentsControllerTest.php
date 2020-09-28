@@ -33,20 +33,7 @@ class WishlistContentControllerTest extends TestCase
         $this->wishlistContents = TestsHelper::createWishlistContents($this->wishlist);
     }
 
-    /**
-     * Test the GET /api/wishlist_contents
-     *
-     * @return void
-     */
-    public function testIndex()
-    {
-        $response = $this->get('/api/wishlist_contents');
-        $response->assertStatus(200);
-        $response->assertJson(['status' => 'OK']);
-        $responseJson = $response->getData();
-        $data = $responseJson->data;
-        $this->assertIsArray($data);
-    }
+    
 
     /**
      * Wishlist Content creation POST /api/wishlist_contents
@@ -63,29 +50,6 @@ class WishlistContentControllerTest extends TestCase
         $response->assertJson(['status' => 'OK', 'data' => [
             "wishlist_id" => $this->wishlistContents->id, 
             "product_id" => 1
-        ]]);
-    }
-
-    /**
-     * Wishlist update PATCH /api/wishlist_contents/id
-     *
-     * @return void
-     */
-    public function testUpdate()
-    {
-
-        // Change product_id
-        $response = $this->patchJson(
-            '/api/wishlist_contents/' . $this->wishlistContents->id, 
-            [
-                'wishlist_id' => $this->wishlistContents->wishlist_id,
-                "product_id" => 286, 
-            ]);
-        $response->assertStatus(200);
-        
-        $response->assertJson(['status' => 'OK', 'data' => [
-            'wishlist_id' => $this->wishlistContents->wishlist_id,
-            'product_id' => 286
         ]]);
     }
 

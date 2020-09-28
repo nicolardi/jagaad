@@ -26,14 +26,17 @@ class WishlistContentsController extends Controller
      */
     public function store(Request $request)
     {
+      
         $wishlist = Wishlist::find($request->input('wishlist_id'));
         
         if (!$wishlist) {
+           
            return $this->errorResponse('Unknown wishlist');
         }
 
         $user_id = $request->input('user_id');
-        if ($wishlist->id != $user_id) {
+        if ($user_id && $wishlist->id != $user_id) {
+         
             return $this->errorResponse('Item is not public');
         }
 
@@ -58,10 +61,10 @@ class WishlistContentsController extends Controller
          }
  
          $user_id = $request->input('user_id');
-         if ($wishlist->id != $user_id) {
+         if ($user_id && $wishlist->id != $user_id) {
              return $this->errorResponse('Item is not public');
          }
-         
+
         $wishlistContents->delete();
         return $this->successResponse(null);
     }

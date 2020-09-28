@@ -88,7 +88,7 @@ class WishlistController extends Controller
     public function destroy(Request $request, Wishlist $wishlist)
     {
         $user_id = $request->input('user_id');
-        if ($user_id != $wishlist->user_id) {
+        if ($user_id && $user_id != $wishlist->user_id) {
             return $this->errorResponse('This item is not public');
         }
         $wishlist->delete();
