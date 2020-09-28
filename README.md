@@ -14,7 +14,6 @@ http://localhost:3000
 
 ## Setup
 
-
 To run the "artisan" command
 
 ```
@@ -25,6 +24,10 @@ docker-compose exec myapp php artisan
 
 ```
 alias artisan="docker-compose exec myapp php artisan"
+```
+## Run composer install
+```
+docker-compose exec myapp php composer.phar install
 ```
 
 ## Run the tests
