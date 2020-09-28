@@ -39,11 +39,15 @@ docker-compose exec myapp php artisan
 alias artisan="docker-compose exec myapp php artisan"
 ```
 
+## seed
+```
+docker-compose exec myapp php artisan db:seed
+```
 
 ## Run the tests
 
 ```
-artisan test
+docker-compose exec myapp php artisan test
 ```
 
 # Api descripion
