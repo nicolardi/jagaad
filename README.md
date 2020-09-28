@@ -52,6 +52,10 @@ alias artisan="docker-compose exec myapp php artisan"
 ```
 docker-compose exec myapp php artisan db:seed
 ```
+The seed adds two valid users:
+
+fake@email.com, 12345678
+fake2@email.com, 12345678
 
 ## Run the tests
 
