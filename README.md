@@ -479,13 +479,12 @@ Successful response:
 }
 ```
 
-
 # Command line
 
 To export the wishlists simply run this command
 
 ```
-artisan wishlist:export
+docker-compose exec myapp php artisan wishlist:export
 ```
 
 Expected result (depending on database data):
@@ -497,8 +496,6 @@ Expected result (depending on database data):
 The format used is CSV with:
 
 user_id,wishlist title,number of products in the wishlist
-
-
 
 # License
 [MIT](https://choosealicense.com/licenses/mit/)
